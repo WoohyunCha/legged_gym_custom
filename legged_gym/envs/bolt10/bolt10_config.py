@@ -94,15 +94,15 @@ class Bolt10Cfg( LeggedRobotCfg ):
 
     class commands( LeggedRobotCfg.commands):
         curriculum = True
-        max_curriculum = 2.
+        max_curriculum = 10.
         num_commands = 3 # default: lin_vel_x, lin_vel_y, ang_vel_yaw, heading (in heading mode ang_vel_yaw is recomputed from heading error)
         resampling_time = 5. # time before command are changed[s]
         heading_command = False # if true: compute ang vel command from heading error
         
         class ranges( LeggedRobotCfg.commands.ranges ):
-            lin_vel_x = [-.8, .8] # min max [m/s] seems like less than or equal to 0.2 it sends 0 command
-            lin_vel_y = [-0.4, 0.4]   # min max [m/s]
-            ang_vel_yaw = [-0.4, 0.4]    # min max [rad/s]
+            lin_vel_x = [-0.8, 0.8] # min max [m/s] seems like less than or equal to 0.2 it sends 0 command
+            lin_vel_y = [-0.8, 0.8]   # min max [m/s]
+            ang_vel_yaw = [-1., 1.]    # min max [rad/s]
             heading = [-3.14, 3.14]
             
 
@@ -119,10 +119,22 @@ class Bolt10Cfg( LeggedRobotCfg ):
             'L_AnklePitch_Joint': -0.25,
 
             'R_HipYaw_Joint': 0.0,
-            'R_HipRoll_Joint': 0.1,
+            'R_HipRoll_Joint': -0.1,
             'R_HipPitch_Joint': -0.15,
             'R_KneePitch_Joint': 0.4,
             'R_AnklePitch_Joint': -0.25
+            
+            # 'L_HipYaw_Joint': 0.,
+            # 'L_HipRoll_Joint': -0.1,
+            # 'L_HipPitch_Joint': 0.15,
+            # 'L_KneePitch_Joint': -0.4,
+            # 'L_AnklePitch_Joint': 0.25,
+
+            # 'R_HipYaw_Joint': 0.0,
+            # 'R_HipRoll_Joint': -0.1,
+            # 'R_HipPitch_Joint': 0.15,
+            # 'R_KneePitch_Joint': -0.4,
+            # 'R_AnklePitch_Joint': 0.25
         }
 
     class control( LeggedRobotCfg.control ):
@@ -196,7 +208,7 @@ class Bolt10Cfg( LeggedRobotCfg ):
         ext_force_robots = True
         ext_force_randomize_interval_s = 5
         ext_force_direction_range = (0, 2*3.141592)
-        ext_force_scale_range = (-6, 6)
+        ext_force_scale_range = (-10, 10)
         ext_force_interval_s = 2
         ext_force_duration_s = [0.3, 0.7]
         randomize_dof_friction = False
@@ -367,7 +379,7 @@ class Bolt10CfgPPO( LeggedRobotCfgPPO ):
         policy_class_name = 'ActorCritic'
         algorithm_class_name = 'PPO_sym'
         num_steps_per_env = 24 # per iteration
-        max_iterations = 2000 # number of policy updates
+        max_iterations = 5000 # number of policy updates
         
         # Optional. Choose the length of state history for the algorithm to use.
         history_len = 5
